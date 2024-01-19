@@ -1,3 +1,7 @@
+/*
+
+*/
+//НЕ РАБОТАЕТ С КИРИЛЛИЦЕЙ
 #include <iostream>
 #include <vector>
 #include <string>
@@ -5,7 +9,7 @@
 #include <algorithm>
 using namespace std;
  
- 
+//функция, проверяющая наличие указанных двух символов(subStr) в строке vecToSearch
 bool find2Symbols(string vecToSearch, string subStr)
 {
     for (int i = 0; i < vecToSearch.size() - 1; i++)
@@ -34,7 +38,7 @@ bool find2Symbols(string vecToSearch, string subStr)
     return false;
 }
  
- 
+//возвращает индексы найденных строк
 vector<int> linearSearch(vector<string> vecToSearch, int length, string hintRow, vector<string>& found)
 {
     vector<int> index;
@@ -64,7 +68,7 @@ vector<int> returnStringSize(vector<string> stringsToSize)
     return sizeVec;
 }
  
- 
+//бинаркой сортируем массив размеров строк 
 int binarySearchForSizes(vector<int> intVec, int start, int end, int length)
 {
     sort(intVec.begin(), intVec.end());
@@ -87,7 +91,7 @@ int binarySearchForSizes(vector<int> intVec, int start, int end, int length)
     return -1;
 }
  
- 
+//возвращает количество строк, удовлетворяющих условию совпадению по длине(foundSize) и наличию двух заданных символов(hintRow)
 int entriesFromBinarySearchedSizeVector(int foundSize, vector<string> stringVec, string hintRow)
 {
     int cntr = 0;
@@ -130,7 +134,9 @@ vector<string> splitStr(string strToSplit)
     return splittedStr;
 }
  
- 
+// перегрузить >> преподаватель запретил :(  
+// поэтому приходится плодить кучу однотипных методов для вывода векторов
+// мб и оптимизировать как-то можно, не догадался ещё
 void outputStr1dVec(vector<string> strVec)
 {
     for (int i = 0; i < strVec.size(); i++)
@@ -151,12 +157,12 @@ void outputInt1dVec(vector<int> intVec)
  
 int main()
 {
-    setlocale(LC_CTYPE, "ru");
-    string a, hint;
-    int len;
+    setlocale(LC_ALL, "RU");
+    string givenText, hint;
+    int len; //длина загаданного слова
     vector<string> foundWords;
     cout << "Введите текст: " << endl;
-    getline(cin, a);
+    getline(cin, givenText);
     cout << "Введите длину слова: " << endl;
     cin >> len;
     if (len < 2)
@@ -171,7 +177,7 @@ int main()
         cout << "Можно ввести только два символа" << endl;
         return -1;
     }
-    vector <string> res = splitStr(a);
+    vector <string> res = splitStr(givenText);
     vector<int> sizeVector = returnStringSize(res);
     int fSize = binarySearchForSizes(sizeVector, 0, sizeVector.size() - 1, len);
     int counter = entriesFromBinarySearchedSizeVector(fSize, res, hint);
@@ -183,7 +189,7 @@ int main()
     }
     cout << "Найдено слов по заданному шаблону: " << endl << counter << endl;
     cout << "Найденные слова: " << endl;
-    outputStr1dVec(foundWords);
+    outputStr1dVec(foundWords);//из linearSearch получается
     cout << "Индексы найденных слов по заданному шаблону: " << endl;
     outputInt1dVec(res_linear);
  
